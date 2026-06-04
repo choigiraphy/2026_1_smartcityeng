@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 220">
+  <defs>
+    <linearGradient id="body" x1="58" y1="42" x2="362" y2="178" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f9fbfb"/>
+      <stop offset="0.3" stop-color="#dce5e6"/>
+      <stop offset="0.58" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#b8c5c8"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="132" y1="46" x2="287" y2="169" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#172a32"/>
+      <stop offset="0.48" stop-color="#39565d"/>
+      <stop offset="1" stop-color="#0c171d"/>
+    </linearGradient>
+    <radialGradient id="highlight" cx="0.36" cy="0.25" r="0.65">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-25%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+  <path d="M23 111C50 49 96 23 171 22h83c62 0 109 32 143 89-34 56-81 87-143 87h-83C96 198 50 172 23 111Z" fill="#07100d" opacity="0.42"/>
+  <g filter="url(#softShadow)">
+    <path d="M34 110C62 51 104 27 174 27h77c58 0 102 30 134 83-32 52-76 82-134 82h-77C104 192 62 168 34 110Z" fill="url(#body)" stroke="#f7ffff" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M300 50c37 14 65 35 85 60-20 24-48 45-85 59 12-39 12-80 0-119Z" fill="#d8f2ee" stroke="#9fb5b6" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M116 57h115c37 0 69 18 97 53-28 34-60 53-97 53H116c20-35 20-71 0-106Z" fill="url(#glass)" stroke="#ecfbfb" stroke-opacity="0.75" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M147 72h72c28 0 53 13 76 38-23 24-48 38-76 38h-72c13-25 13-51 0-76Z" fill="#253f47" stroke="#8de0d7" stroke-opacity="0.35" stroke-width="3"/>
+    <path d="M55 110h72M250 110h80" fill="none" stroke="#4dc7bf" stroke-width="9" stroke-linecap="round" opacity="0.62"/>
+    <path d="M333 92l38 18-38 18" fill="none" stroke="#fff3bf" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 62c22-18 53-26 94-26h75" fill="none" stroke="url(#highlight)" stroke-width="14" stroke-linecap="round"/>
+    <g fill="#0a1113" stroke="#eefbfa" stroke-width="4">
+      <ellipse cx="112" cy="39" rx="21" ry="11"/>
+      <ellipse cx="112" cy="181" rx="21" ry="11"/>
+      <ellipse cx="258" cy="39" rx="23" ry="11"/>
+      <ellipse cx="258" cy="181" rx="23" ry="11"/>
+    </g>
+    <text x="206" y="117" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#16272d" opacity="0.72">NEXO</text>
+  </g>
+</svg>

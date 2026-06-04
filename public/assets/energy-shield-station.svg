@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="node" x1="26" y1="18" x2="94" y2="102" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff1bd"/>
+      <stop offset="0.46" stop-color="#6d6040"/>
+      <stop offset="1" stop-color="#101722"/>
+    </linearGradient>
+    <linearGradient id="core" x1="44" y1="30" x2="76" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f2ffff"/>
+      <stop offset="0.56" stop-color="#6ff4ff"/>
+      <stop offset="1" stop-color="#177f93"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-30%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="48" fill="url(#node)" stroke="#fff0bd" stroke-width="4" filter="url(#shadow)"/>
+  <circle cx="60" cy="60" r="30" fill="#101722" stroke="#6ff4ff" stroke-opacity="0.58" stroke-width="3"/>
+  <path d="M60 30 75 60 60 90 45 60 60 30Z" fill="url(#core)" opacity="0.9"/>
+  <text x="60" y="66" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="900" fill="#f8ffff">H2</text>
+</svg>

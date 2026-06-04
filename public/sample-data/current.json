@@ -1,0 +1,72 @@
+[
+  {
+    "last_mdfcn_dt": "2026-05-04 18:10:00",
+    "chrstn_mno": "SAMPLE-001",
+    "chrstn_nm": "샘플 강동 수소충전소",
+    "tt_pressr": 78,
+    "prfect_elctc_posbl_alge": 12,
+    "wait_vhcle_alge": 1,
+    "cnf_sttus_cd": "01",
+    "cnf_sttus_nm": "원활",
+    "oper_sttus_cd": "01",
+    "oper_sttus_nm": "운영 중",
+    "pos_sttus_cd": "01",
+    "pos_sttus_nm": "정상"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 18:09:00",
+    "chrstn_mno": "SAMPLE-002",
+    "chrstn_nm": "샘플 여의도 수소충전소",
+    "tt_pressr": 71,
+    "prfect_elctc_posbl_alge": 8,
+    "wait_vhcle_alge": 0,
+    "cnf_sttus_cd": "01",
+    "cnf_sttus_nm": "원활",
+    "oper_sttus_cd": "01",
+    "oper_sttus_nm": "운영 중",
+    "pos_sttus_cd": "01",
+    "pos_sttus_nm": "정상"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 18:11:00",
+    "chrstn_mno": "SAMPLE-003",
+    "chrstn_nm": "샘플 성남 수소충전소",
+    "tt_pressr": 62,
+    "prfect_elctc_posbl_alge": 5,
+    "wait_vhcle_alge": 4,
+    "cnf_sttus_cd": "03",
+    "cnf_sttus_nm": "혼잡",
+    "oper_sttus_cd": "01",
+    "oper_sttus_nm": "운영 중",
+    "pos_sttus_cd": "01",
+    "pos_sttus_nm": "정상"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 18:04:00",
+    "chrstn_mno": "SAMPLE-004",
+    "chrstn_nm": "샘플 인천공항 수소충전소",
+    "tt_pressr": 84,
+    "prfect_elctc_posbl_alge": 18,
+    "wait_vhcle_alge": 2,
+    "cnf_sttus_cd": "02",
+    "cnf_sttus_nm": "보통",
+    "oper_sttus_cd": "01",
+    "oper_sttus_nm": "운영 중",
+    "pos_sttus_cd": "01",
+    "pos_sttus_nm": "정상"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 17:55:00",
+    "chrstn_mno": "SAMPLE-005",
+    "chrstn_nm": "샘플 남양주 수소충전소",
+    "tt_pressr": 0,
+    "prfect_elctc_posbl_alge": 0,
+    "wait_vhcle_alge": 0,
+    "cnf_sttus_cd": "99",
+    "cnf_sttus_nm": "정보 없음",
+    "oper_sttus_cd": "03",
+    "oper_sttus_nm": "운영 중지",
+    "pos_sttus_cd": "02",
+    "pos_sttus_nm": "중지"
+  }
+]

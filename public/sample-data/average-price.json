@@ -1,0 +1,37 @@
+[
+  {
+    "chrstn_untpc": 9750,
+    "chrstn_mno": "SAMPLE-001",
+    "chrstn_nm": "샘플 강동 수소충전소",
+    "area_nm": "서울",
+    "sm_date": "202604"
+  },
+  {
+    "chrstn_untpc": 10150,
+    "chrstn_mno": "SAMPLE-002",
+    "chrstn_nm": "샘플 여의도 수소충전소",
+    "area_nm": "서울",
+    "sm_date": "202604"
+  },
+  {
+    "chrstn_untpc": 9550,
+    "chrstn_mno": "SAMPLE-003",
+    "chrstn_nm": "샘플 성남 수소충전소",
+    "area_nm": "경기",
+    "sm_date": "202604"
+  },
+  {
+    "chrstn_untpc": 10600,
+    "chrstn_mno": "SAMPLE-004",
+    "chrstn_nm": "샘플 인천공항 수소충전소",
+    "area_nm": "인천",
+    "sm_date": "202604"
+  },
+  {
+    "chrstn_untpc": 9900,
+    "chrstn_mno": "SAMPLE-005",
+    "chrstn_nm": "샘플 남양주 수소충전소",
+    "area_nm": "경기",
+    "sm_date": "202604"
+  }
+]

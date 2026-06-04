@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: hydrogen-station-dashboard
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: H2_SNAPSHOT_COLLECTOR
+        value: "1"
+      - key: H2_SNAPSHOT_INTERVAL_MINUTES
+        value: "10"
+      - key: PUBLIC_DATA_SERVICE_KEY
+        sync: false
+      - key: KAKAO_MOBILITY_REST_API_KEY
+        sync: false
+      - key: KAKAO_MAPS_JAVASCRIPT_KEY
+        sync: false
+      - key: SEOUL_TRAFFIC_API_KEY
+        sync: false

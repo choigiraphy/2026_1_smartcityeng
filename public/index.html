@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>수소충전소 최적 안내</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQvmlGLo2E1d0W3tucGgOHQjxx8N9oM="
+      crossorigin=""
+    >
+    <link rel="stylesheet" href="/styles.css?v=20260518-national-range">
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script defer src="/app.js?v=20260518-national-range"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="nav-topbar">
+        <div class="brand-block">
+          <div class="brand-icon"><i data-lucide="fuel"></i></div>
+          <div>
+            <p class="eyebrow">Hydrogen Navigation</p>
+            <h1>수소충전소 최적 안내</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <span id="sourceBadge" class="badge muted">연결 확인 중</span>
+          <a id="modeToggleBtn" class="mode-toggle-button" href="/?ui=standard" aria-label="일반 모드로 전환">STANDARD</a>
+          <button id="refreshBtn" class="icon-button" type="button" title="새로고침" aria-label="새로고침">
+            <i data-lucide="refresh-cw"></i>
+          </button>
+        </div>
+      </header>
+
+      <section class="nav-layout">
+        <aside class="route-panel" aria-label="추천 및 조건">
+          <section class="nav-section location-section">
+            <div class="section-heading">
+              <i data-lucide="crosshair"></i>
+              <h2>출발 위치</h2>
+            </div>
+            <button id="locateBtn" class="primary-button" type="button">
+              <i data-lucide="locate-fixed"></i>
+              현위치
+            </button>
+            <div class="coordinate-grid">
+              <label>
+                위도
+                <input id="latInput" type="number" step="0.000001" value="37.554700">
+              </label>
+              <label>
+                경도
+                <input id="lonInput" type="number" step="0.000001" value="126.970700">
+              </label>
+            </div>
+            <p id="locationStatus" class="fineprint">서울역: 37.55470, 126.97070</p>
+          </section>
+
+          <section class="nav-section destination-section" aria-label="목적지">
+            <div class="section-heading">
+              <i data-lucide="map-pinned"></i>
+              <h2>목적지</h2>
+            </div>
+            <div class="destination-search">
+              <input id="destinationSearchInput" type="search" placeholder="목적지 검색: 수원역, 안양시청, 주소">
+              <button id="destinationSearchBtn" class="destination-search-button" type="button" title="목적지 검색" aria-label="목적지 검색">
+                <i data-lucide="search"></i>
+              </button>
+            </div>
+            <div id="destinationSearchResults" class="destination-results" aria-live="polite"></div>
+            <div class="destination-presets">
+              <button type="button" data-destination-preset data-label="부산역" data-lat="35.115100" data-lon="129.041500">부산역</button>
+              <button type="button" data-destination-preset data-label="대구역" data-lat="35.875900" data-lon="128.596100">대구역</button>
+              <button type="button" data-destination-preset data-label="대전역" data-lat="36.332600" data-lon="127.434800">대전역</button>
+            </div>
+            <details class="manual-coordinates">
+              <summary>직접 좌표 입력</summary>
+              <label class="destination-name">
+                목적지명
+                <input id="destLabelInput" type="text" value="부산역">
+              </label>
+              <div class="coordinate-grid">
+                <label>
+                  위도
+                  <input id="destLatInput" type="number" step="0.000001" value="35.115100">
+                </label>
+                <label>
+                  경도
+                  <input id="destLonInput" type="number" step="0.000001" value="129.041500">
+                </label>
+              </div>
+            </details>
+            <p id="destinationStatus" class="fineprint">부산역: 35.11510, 129.04150</p>
+          </section>
+
+          <section class="nav-section vehicle-section" aria-label="차량 상태">
+            <div class="section-heading">
+              <i data-lucide="gauge"></i>
+              <h2>차량 상태</h2>
+            </div>
+            <div class="vehicle-grid">
+              <label>
+                현재 충전도
+                <input id="socInput" type="number" min="0" max="100" step="1" value="70">
+              </label>
+              <label>
+                완충 주행거리
+                <input id="fullRangeInput" type="number" min="100" max="1000" step="10" value="600">
+              </label>
+              <label>
+                안전 여유
+                <input id="reserveRangeInput" type="number" min="0" max="200" step="5" value="30">
+              </label>
+            </div>
+            <p id="vehicleStatus" class="fineprint">현재 주행가능 420km · 안전 여유 30km</p>
+            <div id="scenarioPanel" class="scenario-panel">충전 시나리오 계산 중</div>
+          </section>
+
+          <section class="recommendation-stack" aria-label="추천 충전소">
+            <div class="section-heading recommendation-heading">
+              <i data-lucide="navigation-2"></i>
+              <h2>추천 경로</h2>
+            </div>
+            <article id="priceRecommendation" class="recommend-card price-card"></article>
+            <article id="distanceRecommendation" class="recommend-card distance-card"></article>
+            <article id="timeRecommendation" class="recommend-card time-card"></article>
+          </section>
+
+          <section class="nav-section filter-section" aria-label="추천 조건">
+            <div class="section-heading">
+              <i data-lucide="sliders-horizontal"></i>
+              <h2>경로 정책</h2>
+            </div>
+            <div class="route-policy-card">
+              <div class="interval-row route-policy-row" data-filter="routePolicy">
+                <span>경로 안내 방식</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="onRoute">경로상만</button>
+                  <button class="interval-button active" type="button" data-value="detour">이탈 허용</button>
+                </div>
+              </div>
+              <p id="routePolicySummary" class="route-policy-summary">이탈 허용: 추가시간/거리 표시</p>
+            </div>
+            <p id="filterSummary" class="fineprint">조건 적용 중</p>
+            <details class="advanced-controls">
+              <summary>
+                조건 조정
+                <span>가격 · 거리 · 시간 · 제한조건</span>
+              </summary>
+              <div class="interval-row" data-filter="price">
+                <span>가격</span>
+                <div class="interval-buttons">
+                  <button class="interval-button active" type="button" data-value="all">전체</button>
+                  <button class="interval-button" type="button" data-value="9500">9,500↓</button>
+                  <button class="interval-button" type="button" data-value="10000">10,000↓</button>
+                  <button class="interval-button" type="button" data-value="10500">10,500↓</button>
+                </div>
+              </div>
+              <div class="interval-row" data-filter="onRouteKm">
+                <span>경로상 기준 거리</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="1">1km</button>
+                  <button class="interval-button" type="button" data-value="3">3km</button>
+                  <button class="interval-button active" type="button" data-value="5">5km</button>
+                  <button class="interval-button" type="button" data-value="10">10km</button>
+                </div>
+              </div>
+              <div class="interval-row" data-filter="onRouteMinutes">
+                <span>경로상 기준 시간</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="0">0분</button>
+                  <button class="interval-button" type="button" data-value="5">5분</button>
+                  <button class="interval-button active" type="button" data-value="10">10분</button>
+                  <button class="interval-button" type="button" data-value="15">15분</button>
+                </div>
+              </div>
+              <div class="interval-row" data-filter="maxDetourKm">
+                <span>최대 이탈거리</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="5">5km</button>
+                  <button class="interval-button" type="button" data-value="15">15km</button>
+                  <button class="interval-button active" type="button" data-value="25">25km</button>
+                  <button class="interval-button" type="button" data-value="all">전체</button>
+                </div>
+              </div>
+              <div class="interval-row" data-filter="maxExtraMinutes">
+                <span>최대 추가시간</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="10">10분</button>
+                  <button class="interval-button active" type="button" data-value="30">30분</button>
+                  <button class="interval-button" type="button" data-value="60">60분</button>
+                  <button class="interval-button" type="button" data-value="all">전체</button>
+                </div>
+              </div>
+              <div class="interval-row" data-filter="time">
+                <span>대기포함 영향</span>
+                <div class="interval-buttons">
+                  <button class="interval-button" type="button" data-value="20">20분</button>
+                  <button class="interval-button" type="button" data-value="45">45분</button>
+                  <button class="interval-button active" type="button" data-value="90">90분</button>
+                  <button class="interval-button" type="button" data-value="all">전체</button>
+                </div>
+              </div>
+              <div class="interval-row reservation-row" data-filter="reservation">
+                <span>사전 예약제</span>
+                <div class="interval-buttons">
+                  <button class="interval-button active" type="button" data-value="exclude">제외</button>
+                  <button class="interval-button" type="button" data-value="include">포함</button>
+                </div>
+              </div>
+              <div class="interval-row bus-row" data-filter="busOnly">
+                <span>버스 전용</span>
+                <div class="interval-buttons">
+                  <button class="interval-button active" type="button" data-value="exclude">제외</button>
+                  <button class="interval-button" type="button" data-value="include">포함</button>
+                </div>
+              </div>
+            </details>
+            <div id="insightPanel" class="insight-panel">패턴 기록 수집 중</div>
+          </section>
+
+          <section class="station-section" aria-label="충전소 현황">
+            <div class="section-heading count-heading">
+              <div>
+                <i data-lucide="list-filter"></i>
+                <h2>후보</h2>
+              </div>
+              <span class="count-pill"><b id="stationCount">0</b><small id="stationTotal"></small></span>
+            </div>
+            <div id="stationList" class="station-list"></div>
+          </section>
+        </aside>
+
+        <section class="map-panel" aria-label="지도">
+          <div id="map"></div>
+          <section id="rtsHud" class="rts-hud" aria-label="RTS 지휘 콘솔">
+            <div id="rtsUnitTrack" class="rts-unit-track" aria-hidden="true"></div>
+            <aside id="rtsMinimap" class="rts-minimap"></aside>
+            <section id="rtsTelemetry" class="rts-telemetry"></section>
+            <section id="rtsCommandDock" class="rts-command-dock"></section>
+          </section>
+          <section id="kpiStrip" class="kpi-strip" aria-label="수소충전 네트워크 요약">
+            <article class="kpi-card">
+              <span>전국 후보</span>
+              <strong>--</strong>
+            </article>
+            <article class="kpi-card">
+              <span>운영중</span>
+              <strong>--</strong>
+            </article>
+            <article class="kpi-card">
+              <span>추천 후보</span>
+              <strong>--</strong>
+            </article>
+            <article class="kpi-card">
+              <span>평균 대기</span>
+              <strong>--</strong>
+            </article>
+            <article class="kpi-card">
+              <span>경로산정</span>
+              <strong>--</strong>
+            </article>
+          </section>
+          <div class="map-visual-stack">
+            <section id="recommendCompare" class="visual-card compare-panel" aria-label="추천 3종 비교"></section>
+            <section id="heatmapPanel" class="visual-card heatmap-panel" aria-label="혼잡 패턴 히트맵"></section>
+          </div>
+          <section id="mapLegend" class="map-legend" aria-label="지도 마커 범례"></section>
+          <section id="detailPanel" class="route-sheet" aria-label="선택 충전소 상세"></section>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

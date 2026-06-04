@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 204">
+  <defs>
+    <linearGradient id="outerArmor" x1="36" y1="28" x2="206" y2="174" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ecf1e9"/>
+      <stop offset="0.24" stop-color="#7b8982"/>
+      <stop offset="0.48" stop-color="#2d3c37"/>
+      <stop offset="0.72" stop-color="#b8c3ba"/>
+      <stop offset="1" stop-color="#17231f"/>
+    </linearGradient>
+    <linearGradient id="roofPlate" x1="70" y1="27" x2="168" y2="105" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#dce4db"/>
+      <stop offset="0.5" stop-color="#6f8179"/>
+      <stop offset="1" stop-color="#1b2824"/>
+    </linearGradient>
+    <linearGradient id="h2Glow" x1="83" y1="86" x2="155" y2="146" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff5a3"/>
+      <stop offset="0.5" stop-color="#d9f05d"/>
+      <stop offset="1" stop-color="#30d5a5"/>
+    </linearGradient>
+    <filter id="shadow" x="-22%" y="-30%" width="144%" height="160%">
+      <feDropShadow dx="0" dy="13" stdDeviation="10" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="panelGlow" x="-30%" y="-40%" width="160%" height="180%">
+      <feGaussianBlur stdDeviation="2.6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="120" cy="174" rx="92" ry="23" fill="#000000" opacity="0.46"/>
+  <g filter="url(#shadow)">
+    <path d="M23 132 52 62 119 24l69 38 29 70-98 42-96-42Z" fill="#080d0b" opacity="0.86"/>
+    <path d="M31 128 59 64l60-34 62 34 28 64-90 38-88-38Z" fill="url(#outerArmor)" stroke="#f2fff2" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M59 64 119 30l62 34-62 33-60-33Z" fill="url(#roofPlate)" stroke="#111815" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M31 128 59 64l60 33v69l-88-38Z" fill="#4a5b54" stroke="#111815" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M209 128 181 64l-62 33v69l90-38Z" fill="#202c27" stroke="#111815" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M78 75 119 52l43 23-43 22-41-22Z" fill="#111d19" stroke="#e5fff3" stroke-opacity="0.5" stroke-width="3"/>
+    <path d="M76 113h86v41H76Z" fill="#111c18" stroke="#dfffe9" stroke-opacity="0.45" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M91 121h56v23H91Z" fill="url(#h2Glow)" filter="url(#panelGlow)" opacity="0.9"/>
+    <path d="M119 52v45M61 83l58 31 60-31M53 120h40M147 120h40" fill="none" stroke="#d9f05d" stroke-opacity="0.48" stroke-width="5" stroke-linecap="round"/>
+    <path d="M48 136 74 124M192 136l-26-12M77 154l42 18 43-18" fill="none" stroke="#ecfff2" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#0d1512" stroke="#dfffe9" stroke-opacity="0.72" stroke-width="3">
+      <circle cx="55" cy="138" r="9"/>
+      <circle cx="185" cy="138" r="9"/>
+      <circle cx="119" cy="164" r="8"/>
+    </g>
+    <g fill="#f5b342">
+      <circle cx="75" cy="88" r="4"/>
+      <circle cx="165" cy="88" r="4"/>
+      <circle cx="62" cy="128" r="3.5"/>
+      <circle cx="178" cy="128" r="3.5"/>
+    </g>
+    <text x="119" y="91" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="#f2ffe9">H2</text>
+  </g>
+</svg>

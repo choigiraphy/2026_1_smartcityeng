@@ -1,0 +1,65 @@
+[
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-001",
+    "adi_info_se_cd": "A01",
+    "adi_info_se_nm": "화장실",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-001",
+    "adi_info_se_cd": "A02",
+    "adi_info_se_nm": "편의점",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-002",
+    "adi_info_se_cd": "A03",
+    "adi_info_se_nm": "대기실",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-002",
+    "adi_info_se_cd": "A04",
+    "adi_info_se_nm": "카페",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-003",
+    "adi_info_se_cd": "A05",
+    "adi_info_se_nm": "경정비",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-003",
+    "adi_info_se_cd": "A01",
+    "adi_info_se_nm": "화장실",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-004",
+    "adi_info_se_cd": "A06",
+    "adi_info_se_nm": "세차장",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-004",
+    "adi_info_se_cd": "A01",
+    "adi_info_se_nm": "화장실",
+    "del_at": "N"
+  },
+  {
+    "last_mdfcn_dt": "2026-05-04 09:00:00",
+    "chrstn_mno": "SAMPLE-005",
+    "adi_info_se_cd": "A02",
+    "adi_info_se_nm": "편의점",
+    "del_at": "N"
+  }
+]
