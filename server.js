@@ -206,7 +206,7 @@ function getNexoVehicleTelemetry() {
   const efficiencyKmPerKg = clampNumber(toNumber(process.env.NEXO_EFFICIENCY_KM_PER_KG), 30, 180, nexoProfile.efficiencyKmPerKg);
   const reserveKm = clampNumber(toNumber(process.env.NEXO_RESERVE_RANGE_KM), 0, 200, nexoProfile.reserveKm);
   const socPercent = clampNumber(envSoc, 0, 100, 100);
-  const source = Number.isFinite(envSoc) ? "env-telemetry" : "dashboard-reference";
+  const source = Number.isFinite(envSoc) ? "env-telemetry" : "demo-input";
 
   return {
     available: true,
@@ -214,7 +214,7 @@ function getNexoVehicleTelemetry() {
     sourceName: "Hyundai NEXO vehicle profile",
     reason: Number.isFinite(envSoc)
       ? "서버 환경변수의 차량 상태를 반영했습니다."
-      : "사용자 제공 대시보드 사진의 100% 상태를 데모 기준으로 사용합니다.",
+      : "NEXO 제원 기반 100% 상태를 시연 기본값으로 사용합니다.",
     observedAt: process.env.NEXO_OBSERVED_AT || new Date().toISOString(),
     vehicle: {
       model: nexoProfile.model,
@@ -227,7 +227,7 @@ function getNexoVehicleTelemetry() {
       dashboardRangeKm: Number.isFinite(envDashboardRange) ? envDashboardRange : nexoProfile.dashboardReferenceRangeKm,
       ecoRangeKm: Number.isFinite(envEcoRange) ? envEcoRange : nexoProfile.ecoReferenceRangeKm,
       source,
-      sourceLabel: Number.isFinite(envSoc) ? "차량 상태 연동" : "사진 참조 상태",
+      sourceLabel: Number.isFinite(envSoc) ? "차량 상태 연동" : "시연 입력",
       observedAt: process.env.NEXO_OBSERVED_AT || new Date().toISOString()
     }
   };

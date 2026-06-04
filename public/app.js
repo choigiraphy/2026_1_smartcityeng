@@ -30,8 +30,8 @@ const DEFAULT_VEHICLE = {
   efficiencyKmPerKg: NEXO_PROFILE.efficiencyKmPerKg,
   dashboardRangeKm: NEXO_PROFILE.dashboardReferenceRangeKm,
   ecoRangeKm: NEXO_PROFILE.ecoReferenceRangeKm,
-  source: "dashboard-reference",
-  sourceLabel: "사진 참조 상태",
+  source: "demo-input",
+  sourceLabel: "시연 입력",
   observedAt: null
 };
 
@@ -140,6 +140,7 @@ function bindElements() {
     lonInput: document.querySelector("#lonInput"),
     locationStatus: document.querySelector("#locationStatus"),
     socInput: document.querySelector("#socInput"),
+    socSlider: document.querySelector("#socSlider"),
     fullRangeInput: document.querySelector("#fullRangeInput"),
     reserveRangeInput: document.querySelector("#reserveRangeInput"),
     vehicleSourceBadge: document.querySelector("#vehicleSourceBadge"),
@@ -329,11 +330,12 @@ function bindEvents() {
     });
   }
 
+  elements.socInput?.addEventListener("input", () => applyDemoSoc(elements.socInput.value, { syncInput: false }));
+  elements.socInput?.addEventListener("change", () => applyDemoSoc(elements.socInput.value));
+  elements.socSlider?.addEventListener("input", () => applyDemoSoc(elements.socSlider.value));
+
   elements.vehicleSyncBtn?.addEventListener("click", () => {
-    elements.vehicleSyncBtn.disabled = true;
-    void loadVehicleTelemetry({ refresh: true }).finally(() => {
-      elements.vehicleSyncBtn.disabled = false;
-    });
+    applyDemoSoc(100);
   });
 
   for (const input of [elements.destLabelInput, elements.destLatInput, elements.destLonInput]) {
@@ -666,10 +668,21 @@ function setVehicleState(vehicle, options = {}) {
     observedAt: cleanVehicleValue(vehicle.observedAt) || state.vehicle.observedAt
   };
   if (elements.socInput) elements.socInput.value = String(Math.round(state.vehicle.socPercent));
+  if (elements.socSlider) elements.socSlider.value = String(Math.round(state.vehicle.socPercent));
   if (elements.fullRangeInput) elements.fullRangeInput.value = String(Math.round(state.vehicle.fullRangeKm));
   if (elements.reserveRangeInput) elements.reserveRangeInput.value = String(Math.round(state.vehicle.reserveKm));
   updateVehicleDashboard();
   if (options.render !== false) renderDashboard();
+}
+
+function applyDemoSoc(value, options = {}) {
+  const socPercent = clamp(Number(value), 0, 100);
+  if (!Number.isFinite(socPercent)) return;
+  setVehicleState({
+    socPercent,
+    source: "demo-input",
+    sourceLabel: "시연 입력"
+  }, options);
 }
 
 function cleanVehicleValue(value) {
@@ -1350,9 +1363,7 @@ function updateVehicleDashboard(range = vehicleRangeState(), context = {}) {
   const fuelText = Number.isFinite(range.fuelRemainingKg)
     ? `수소 잔량 ${range.fuelRemainingKg.toFixed(1)}kg`
     : "수소 잔량 산정 불가";
-  const dashboardText = Number.isFinite(range.dashboardRangeKm)
-    ? `계기판 참조 ${formatDistance(range.dashboardRangeKm)}`
-    : "";
+  const dashboardText = `입력값 기준 ${formatDistance(range.availableRangeKm)}`;
   const routeHint = vehicleRouteHint(range, context);
 
   if (elements.vehicleSourceBadge) elements.vehicleSourceBadge.textContent = sourceLabel;
@@ -1392,7 +1403,8 @@ function vehicleRouteHint(range, context) {
 
 function vehicleSourceLabel(range) {
   if (range.source === "env-telemetry") return "차량 상태 연동";
-  if (range.source === "dashboard-reference") return "사진 참조 상태";
+  if (range.source === "demo-input") return "시연 입력";
+  if (range.source === "dashboard-reference") return "시연 입력";
   if (range.source === "nexo-spec-fallback") return "NEXO 제원 fallback";
   return range.sourceLabel || "NEXO 제원 기준";
 }

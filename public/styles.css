@@ -732,6 +732,53 @@ svg {
   white-space: nowrap;
 }
 
+.vehicle-demo-control {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(111, 244, 255, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(111, 244, 255, 0.12), rgba(199, 227, 95, 0.08)),
+    rgba(5, 10, 14, 0.52);
+}
+
+.vehicle-demo-control label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgba(237, 250, 255, 0.72);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.vehicle-demo-control strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.vehicle-demo-control input[type="number"] {
+  width: 68px;
+  height: 34px;
+  border: 1px solid rgba(111, 244, 255, 0.28);
+  border-radius: 7px;
+  background: rgba(2, 7, 11, 0.78);
+  color: white;
+  font-size: 18px;
+  font-weight: 950;
+  text-align: right;
+}
+
+.vehicle-demo-control input[type="range"] {
+  width: 100%;
+  accent-color: #6ff4ff;
+}
+
 .vehicle-sync-button {
   display: inline-flex;
   align-items: center;
