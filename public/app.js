@@ -1347,7 +1347,10 @@ function updateVehicleDashboard(range = vehicleRangeState(), context = {}) {
     elements.vehicleSpecLine.textContent = `공인 ${formatDistance(range.fullRangeKm)} · ${range.fuelCapacityKg.toFixed(2)}kg · ${range.efficiencyKmPerKg.toFixed(1)}km/kg`;
   }
 
-  document.querySelector(".vehicle-dashboard")?.style.setProperty("--soc-ratio", String(clamp(range.socPercent / 100, 0, 1)));
+  const dashboard = document.querySelector(".vehicle-dashboard");
+  dashboard?.style.setProperty("--soc-ratio", String(clamp(range.socPercent / 100, 0, 1)));
+  dashboard?.style.setProperty("--range-ratio", String(clamp(range.availableRangeKm / range.fullRangeKm, 0, 1)));
+  dashboard?.style.setProperty("--safe-ratio", String(clamp(range.safeRangeKm / range.fullRangeKm, 0, 1)));
 }
 
 function vehicleRouteHint(range, context) {

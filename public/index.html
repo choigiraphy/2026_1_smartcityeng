@@ -10,7 +10,7 @@
       integrity="sha256-p4NxAoJBhIINfQvmlGLo2E1d0W3tucGgOHQjxx8N9oM="
       crossorigin=""
     >
-    <link rel="stylesheet" href="/styles.css?v=20260604-nexo-dashboard">
+    <link rel="stylesheet" href="/styles.css?v=20260604-instrument-cluster">
     <script
       defer
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -18,7 +18,7 @@
       crossorigin=""
     ></script>
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script defer src="/app.js?v=20260604-nexo-dashboard"></script>
+    <script defer src="/app.js?v=20260604-instrument-cluster"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -107,30 +107,41 @@
               <span id="vehicleSourceBadge" class="vehicle-source-badge">NEXO 제원 기준</span>
             </div>
             <div class="vehicle-dashboard">
-              <div class="vehicle-cluster">
-                <div class="vehicle-cluster-top">
+              <div class="vehicle-instrument" aria-label="NEXO 디지털 계기판">
+                <div class="instrument-topline">
                   <span>FCEV</span>
-                  <strong>Hyundai NEXO</strong>
+                  <strong>NEXO</strong>
+                  <span>READY</span>
                 </div>
-                <div class="vehicle-roadline">
-                  <div class="vehicle-soc-pill" id="vehicleSocGauge">100%</div>
-                  <img class="vehicle-cluster-car" src="/assets/nexo-top-view.svg" alt="Hyundai NEXO top view">
-                  <div class="vehicle-h2-pin" aria-hidden="true"><span>H2</span></div>
+                <div class="instrument-grid">
+                  <div class="instrument-dial h2-dial">
+                    <div class="dial-face">
+                      <span class="dial-kicker">H2</span>
+                      <strong id="vehicleSocGauge">100%</strong>
+                      <em>충전도</em>
+                    </div>
+                  </div>
+                  <div class="instrument-center">
+                    <span class="ready-indicator">READY</span>
+                    <div class="nexo-cluster-silhouette" aria-hidden="true">
+                      <span></span>
+                    </div>
+                    <p id="vehicleFuelEstimate">수소 잔량 계산 중</p>
+                    <strong id="vehicleRouteHint">목적지 도달성 계산 중</strong>
+                  </div>
+                  <div class="instrument-dial range-dial">
+                    <div class="dial-face">
+                      <span class="dial-kicker">RANGE</span>
+                      <strong id="vehicleRangePrimary">--km</strong>
+                      <em>주행가능</em>
+                    </div>
+                  </div>
                 </div>
-                <div class="vehicle-cluster-bottom">
-                  <span id="vehicleFuelEstimate">수소 잔량 계산 중</span>
-                  <strong id="vehicleRouteHint">목적지 도달성 계산 중</strong>
-                </div>
-              </div>
-              <div class="vehicle-readouts">
-                <article>
-                  <span>공인 기준 주행가능</span>
-                  <strong id="vehicleRangePrimary">--km</strong>
-                </article>
-                <article>
-                  <span>안전권</span>
+                <div class="instrument-safe-strip">
+                  <span>SAFE RANGE</span>
                   <strong id="vehicleSafeRange">--km</strong>
-                </article>
+                  <em>RESERVE 30km</em>
+                </div>
               </div>
             </div>
             <input id="socInput" type="hidden" value="100">
