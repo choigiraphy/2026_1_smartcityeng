@@ -10,7 +10,7 @@
       integrity="sha256-p4NxAoJBhIINfQvmlGLo2E1d0W3tucGgOHQjxx8N9oM="
       crossorigin=""
     >
-    <link rel="stylesheet" href="/styles.css?v=20260518-national-range">
+    <link rel="stylesheet" href="/styles.css?v=20260604-nexo-dashboard">
     <script
       defer
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -18,7 +18,7 @@
       crossorigin=""
     ></script>
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script defer src="/app.js?v=20260518-national-range"></script>
+    <script defer src="/app.js?v=20260604-nexo-dashboard"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -101,25 +101,47 @@
           </section>
 
           <section class="nav-section vehicle-section" aria-label="차량 상태">
-            <div class="section-heading">
+            <div class="section-heading vehicle-heading">
               <i data-lucide="gauge"></i>
               <h2>차량 상태</h2>
+              <span id="vehicleSourceBadge" class="vehicle-source-badge">NEXO 제원 기준</span>
             </div>
-            <div class="vehicle-grid">
-              <label>
-                현재 충전도
-                <input id="socInput" type="number" min="0" max="100" step="1" value="70">
-              </label>
-              <label>
-                완충 주행거리
-                <input id="fullRangeInput" type="number" min="100" max="1000" step="10" value="600">
-              </label>
-              <label>
-                안전 여유
-                <input id="reserveRangeInput" type="number" min="0" max="200" step="5" value="30">
-              </label>
+            <div class="vehicle-dashboard">
+              <div class="vehicle-cluster">
+                <div class="vehicle-cluster-top">
+                  <span>FCEV</span>
+                  <strong>Hyundai NEXO</strong>
+                </div>
+                <div class="vehicle-roadline">
+                  <div class="vehicle-soc-pill" id="vehicleSocGauge">100%</div>
+                  <img class="vehicle-cluster-car" src="/assets/nexo-top-view.svg" alt="Hyundai NEXO top view">
+                  <div class="vehicle-h2-pin" aria-hidden="true"><span>H2</span></div>
+                </div>
+                <div class="vehicle-cluster-bottom">
+                  <span id="vehicleFuelEstimate">수소 잔량 계산 중</span>
+                  <strong id="vehicleRouteHint">목적지 도달성 계산 중</strong>
+                </div>
+              </div>
+              <div class="vehicle-readouts">
+                <article>
+                  <span>공인 기준 주행가능</span>
+                  <strong id="vehicleRangePrimary">--km</strong>
+                </article>
+                <article>
+                  <span>안전권</span>
+                  <strong id="vehicleSafeRange">--km</strong>
+                </article>
+              </div>
             </div>
-            <p id="vehicleStatus" class="fineprint">현재 주행가능 420km · 안전 여유 30km</p>
+            <input id="socInput" type="hidden" value="100">
+            <input id="fullRangeInput" type="hidden" value="609">
+            <input id="reserveRangeInput" type="hidden" value="30">
+            <p id="vehicleStatus" class="fineprint">NEXO 차량 상태 동기화 중</p>
+            <p id="vehicleSpecLine" class="vehicle-spec-line">공인 609km · 6.33kg · 96.2km/kg</p>
+            <button id="vehicleSyncBtn" class="vehicle-sync-button" type="button">
+              <i data-lucide="refresh-cw"></i>
+              차량 상태 다시 동기화
+            </button>
             <div id="scenarioPanel" class="scenario-panel">충전 시나리오 계산 중</div>
           </section>
 

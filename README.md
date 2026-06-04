@@ -46,6 +46,16 @@ npm start
 
 자동 수집은 서버 프로세스가 실행 중일 때만 동작합니다.
 
+## 차량 상태 산정
+
+대시보드는 차량 충전도를 사용자가 직접 입력하지 않고 `/api/vehicle/nexo`에서 차량 상태를 받아와 추천 로직에 반영합니다. 현재 기본값은 사용자가 제공한 NEXO 대시보드 사진의 100% 상태를 데모 기준으로 사용하고, 주행가능거리는 NEXO 공인 제원으로 계산합니다.
+
+- 기본 제원: 공인 주행거리 609km, 수소탱크 6.33kg, 복합연비 96.2km/kg
+- 계산식: `공인 주행거리 × 현재 충전도`, 안전권은 `주행가능거리 - 안전 여유`
+- 표시값: 사진의 계기판 주행가능거리 668km/689km는 참조 정보로 표시하고, 추천 판단은 공인 609km 기준
+- 환경변수 연동: `NEXO_SOC_PERCENT`, `NEXO_DASHBOARD_RANGE_KM`, `NEXO_ECO_RANGE_KM`, `NEXO_RESERVE_RANGE_KM`
+- 실제 실차 연동: 현대 Bluelink/OBD 등에서 인증된 텔레메트리 값을 받을 수 있으면 `/api/vehicle/nexo` 내부만 교체하면 됩니다.
+
 ## 사용 API
 
 - 운영정보: `https://apis.data.go.kr/B552532/h2nbiz_2/operationInfo`

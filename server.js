@@ -27,6 +27,16 @@ const endpoints = {
   kakaoLocalAddress: "https://dapi.kakao.com/v2/local/search/address.json"
 };
 
+const nexoProfile = {
+  model: "Hyundai NEXO",
+  certifiedRangeKm: 609,
+  fuelCapacityKg: 6.33,
+  efficiencyKmPerKg: 96.2,
+  reserveKm: 30,
+  dashboardReferenceRangeKm: 668,
+  ecoReferenceRangeKm: 689
+};
+
 const apiNames = {
   operation: "한국석유관리원_수소충전소_운영정보",
   current: "한국석유관리원_수소충전소_실시간정보",
@@ -99,6 +109,11 @@ const server = createServer(async (req, res) => {
         hasKakaoMobilityKey: Boolean(getKakaoMobilityKey()),
         hasKakaoLocalKey: Boolean(getKakaoLocalKey())
       });
+      return;
+    }
+
+    if (url.pathname === "/api/vehicle/nexo") {
+      sendJson(res, 200, getNexoVehicleTelemetry());
       return;
     }
 
@@ -181,6 +196,42 @@ server.listen(port, () => {
   console.log(`Hydrogen dashboard: http://localhost:${port}`);
   startSnapshotCollector();
 });
+
+function getNexoVehicleTelemetry() {
+  const envSoc = toNumber(process.env.NEXO_SOC_PERCENT);
+  const envDashboardRange = toNumber(process.env.NEXO_DASHBOARD_RANGE_KM);
+  const envEcoRange = toNumber(process.env.NEXO_ECO_RANGE_KM);
+  const certifiedRangeKm = clampNumber(toNumber(process.env.NEXO_CERTIFIED_RANGE_KM), 100, 1000, nexoProfile.certifiedRangeKm);
+  const fuelCapacityKg = clampNumber(toNumber(process.env.NEXO_FUEL_CAPACITY_KG), 1, 10, nexoProfile.fuelCapacityKg);
+  const efficiencyKmPerKg = clampNumber(toNumber(process.env.NEXO_EFFICIENCY_KM_PER_KG), 30, 180, nexoProfile.efficiencyKmPerKg);
+  const reserveKm = clampNumber(toNumber(process.env.NEXO_RESERVE_RANGE_KM), 0, 200, nexoProfile.reserveKm);
+  const socPercent = clampNumber(envSoc, 0, 100, 100);
+  const source = Number.isFinite(envSoc) ? "env-telemetry" : "dashboard-reference";
+
+  return {
+    available: true,
+    source,
+    sourceName: "Hyundai NEXO vehicle profile",
+    reason: Number.isFinite(envSoc)
+      ? "서버 환경변수의 차량 상태를 반영했습니다."
+      : "사용자 제공 대시보드 사진의 100% 상태를 데모 기준으로 사용합니다.",
+    observedAt: process.env.NEXO_OBSERVED_AT || new Date().toISOString(),
+    vehicle: {
+      model: nexoProfile.model,
+      socPercent,
+      fullRangeKm: certifiedRangeKm,
+      certifiedRangeKm,
+      reserveKm,
+      fuelCapacityKg,
+      efficiencyKmPerKg,
+      dashboardRangeKm: Number.isFinite(envDashboardRange) ? envDashboardRange : nexoProfile.dashboardReferenceRangeKm,
+      ecoRangeKm: Number.isFinite(envEcoRange) ? envEcoRange : nexoProfile.ecoReferenceRangeKm,
+      source,
+      sourceLabel: Number.isFinite(envSoc) ? "차량 상태 연동" : "사진 참조 상태",
+      observedAt: process.env.NEXO_OBSERVED_AT || new Date().toISOString()
+    }
+  };
+}
 
 async function getStationPayload({ forceRefresh, forceMock, writeSource = "api-request" }) {
   const serviceKey = getServiceKey();
@@ -1924,6 +1975,11 @@ function toNumber(value) {
   if (!text) return null;
   const number = Number(text);
   return Number.isFinite(number) ? number : null;
+}
+
+function clampNumber(value, min, max, fallback) {
+  if (!Number.isFinite(value)) return fallback;
+  return Math.min(max, Math.max(min, value));
 }
 
 function parsePrice(value) {
