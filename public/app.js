@@ -120,6 +120,7 @@ const state = {
 const elements = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
+  initOpeningCeremony();
   initUiMode();
   bindElements();
   await initMap();
@@ -187,6 +188,26 @@ function initUiMode() {
   const mode = new URLSearchParams(window.location.search).get("ui");
   state.uiMode = mode === "standard" ? "default" : "rts-console";
   document.body.classList.toggle("ui-rts-console", state.uiMode === "rts-console");
+}
+
+function initOpeningCeremony() {
+  const opening = document.querySelector("#nexoOpening");
+  if (!opening) return;
+
+  const durationMs = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? 900 : 4050;
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    document.body.classList.add("opening-complete");
+    window.setTimeout(() => opening.remove(), 300);
+  };
+
+  const timer = window.setTimeout(finish, durationMs);
+  document.querySelector("#openingSkipBtn")?.addEventListener("click", () => {
+    window.clearTimeout(timer);
+    finish();
+  });
 }
 
 function syncModeToggle() {
@@ -2135,11 +2156,16 @@ function renderRtsUnitTrack(station) {
 
 function rtsVehicleSvg() {
   return `
-    <g class="route-car-icon">
-      <path class="route-car-body" d="M-23 0c5.5-10 15-15 29-15h4c10.5 0 19 5.5 26 15-7 9.5-15.5 15-26 15H6c-14 0-23.5-5-29-15Z"></path>
-      <path class="route-car-cabin" d="M-3-8h12c6 0 11 2.8 15 8-4 5.2-9 8-15 8H-3c3.2-5.2 3.2-10.8 0-16Z"></path>
-      <path class="route-car-front" d="M25-6 36 0 25 6"></path>
-      <path class="route-car-axle" d="M-16-13h10M-16 13h10M11-13h10M11 13h10"></path>
+    <g class="route-car-icon" transform="scale(0.78)">
+      <path class="route-car-shadow" d="M-42 0c9-18 24-27 48-27h16c24 0 42 10 56 27-14 17-32 27-56 27H6c-24 0-39-9-48-27Z"></path>
+      <path class="route-car-body" d="M-38 0c8.5-17 23-25 46-25h14c22 0 39 9.5 52 25-13 15.5-30 25-52 25H8c-23 0-37.5-8-46-25Z"></path>
+      <path class="route-car-nose" d="M43-15c13 4.8 22 9.8 31 15-9 5.2-18 10.2-31 15 4.3-10.2 4.3-19.8 0-30Z"></path>
+      <path class="route-car-glass" d="M-12-14h26c15 0 27 5 37 14-10 9-22 14-37 14h-26c6.4-9.2 6.4-18.8 0-28Z"></path>
+      <path class="route-car-roof" d="M-3-8h22c9.8 0 18 2.8 25 8-7 5.2-15.2 8-25 8H-3c3.4-5.2 3.4-10.8 0-16Z"></path>
+      <path class="route-car-light" d="M54-7 68 0 54 7"></path>
+      <path class="route-car-accent" d="M-31 0h25M25 0h22"></path>
+      <path class="route-car-wheel-line" d="M-24-24h14M-24 24h14M17-24h16M17 24h16"></path>
+      <text class="route-car-label" x="7" y="4" text-anchor="middle">NEXO</text>
     </g>
   `;
 }

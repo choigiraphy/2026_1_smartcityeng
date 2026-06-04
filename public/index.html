@@ -10,7 +10,7 @@
       integrity="sha256-p4NxAoJBhIINfQvmlGLo2E1d0W3tucGgOHQjxx8N9oM="
       crossorigin=""
     >
-    <link rel="stylesheet" href="/styles.css?v=20260604-instrument-cluster">
+    <link rel="stylesheet" href="/styles.css?v=20260604-nexo-opening">
     <script
       defer
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -18,9 +18,31 @@
       crossorigin=""
     ></script>
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script defer src="/app.js?v=20260604-instrument-cluster"></script>
+    <script defer src="/app.js?v=20260604-nexo-opening"></script>
   </head>
   <body>
+    <section id="nexoOpening" class="nexo-opening" aria-label="HYUNDAI NEXO 오프닝">
+      <div class="opening-brand">
+        <span>HYUNDAI</span>
+        <strong>NEXO</strong>
+      </div>
+      <div class="opening-stage" aria-hidden="true">
+        <div class="opening-lightbar"></div>
+        <div class="opening-nexo">
+          <div class="opening-nexo-roof"></div>
+          <div class="opening-nexo-glass"></div>
+          <div class="opening-nexo-front"></div>
+          <div class="opening-nexo-wheel opening-nexo-wheel-front"></div>
+          <div class="opening-nexo-wheel opening-nexo-wheel-rear"></div>
+        </div>
+        <div class="opening-reflection"></div>
+      </div>
+      <div class="opening-title">
+        <span>HYDROGEN MOBILITY ROUTE INTELLIGENCE</span>
+        <strong>NEXO</strong>
+      </div>
+      <button id="openingSkipBtn" class="opening-skip" type="button">SKIP</button>
+    </section>
     <main class="app-shell">
       <header class="nav-topbar">
         <div class="brand-block">
